@@ -1,6 +1,5 @@
 from selenium.common.exceptions import NoSuchElementException
 import undetected_chromedriver.v2 as uc
-from datetime import date, timedelta
 import time
 import shutil
 import glob
@@ -84,35 +83,30 @@ all_markets = {
 }
 
 
-def data_pull_daily(csv_directory):
-    options = uc.ChromeOptions()
-    driver = uc.Chrome(options=options)
+def data_pull_daily(data_directory):
+    driver = uc.Chrome()
 
     timestr = time.strftime("%Y%m%d")
 
-    # if not os.path.exists(csv_directory):
-    #     os.makedirs(csv_directory)
-    #     print(f'Made {csv_directory} folder.')
+    with driver:
+        for country in tqdm(countries):
+            driver.get('https://spotifycharts.com/regional/{}/daily/latest'.format(country))
 
-    for country in tqdm(countries):
-        driver.get('https://spotifycharts.com/regional/{}/daily/latest'.format(country))
+            try:
+                link_download_daily = driver.find_element_by_link_text('DOWNLOAD TO CSV')
+                set1 = link_download_daily
+                time.sleep(5)
+                set1.click()
+            except NoSuchElementException:
+                continue
 
-        try:
-            link_download_daily = driver.find_element_by_link_text('DOWNLOAD TO CSV')
-            set1 = link_download_daily
-            set1.click()
-        except NoSuchElementException:
-            continue
+            downloads_path = str(Path.home() / "Downloads")
+            os.chdir(downloads_path)
 
-        time.sleep(5)
+            for file in glob.glob("*daily-latest.csv"):
+                shutil.move(file, data_directory)
 
-        downloads_path = str(Path.home() / "Downloads")
-        os.chdir(downloads_path)
-
-        for file in glob.glob("*daily-latest.csv"):
-            shutil.move(file, csv_directory)
-
-        os.chdir(csv_directory)
-        os.rename('regional-{}-daily-latest.csv'.format(country), "{}_top200_daily_{}.csv".format(country, timestr))
+            os.chdir(data_directory)
+            os.rename('regional-{}-daily-latest.csv'.format(country), "{}_top200_daily_{}.csv".format(country, timestr))
 
     driver.quit()

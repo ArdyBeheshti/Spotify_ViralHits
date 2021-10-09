@@ -22,9 +22,9 @@ print("Finished ranking weekly Spotify songs")
 weekly_generes_df = spotify_weekly_functions.artist_genres(weekly_ranking_dfs)
 print("Finished getting genres for each artist")
 
-weekly_geocode_df = spotify_daily_functions.geocode(weekly_generes_df)
+weekly_geocode_df = spotify_weekly_functions.geocode(weekly_generes_df)
 print("Finished geocoding")
 
-spotify_daily_functions.create_db(path, weekly_geocode_df)
+spotify_weekly_functions.create_db(path, weekly_geocode_df)
 print("Created database for weekly songs")
 print("Completed weekly song functions!")

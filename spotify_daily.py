@@ -1,5 +1,5 @@
-import os
-from scripts import spotify_daily_functions, spotify_daily_pull
+import os, time
+import spotify_daily_functions, spotify_daily_pull
 
 timestr = time.strftime("%Y%m%d")
 
@@ -7,7 +7,7 @@ path = os.getcwd()
 data_directory = os.path.join(path, f'data/csvs/{timestr}')
 
 if not os.path.exists(data_directory):
-    os.makedirs(data_directory + '/' + f'{timestr}')
+    os.makedirs(data_directory)
     print(f'Made {data_directory} folder.')
 
 spotify_daily_pull.data_pull_daily(data_directory)
