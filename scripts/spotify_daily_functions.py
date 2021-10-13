@@ -1,4 +1,3 @@
-from datetime import date, timedelta
 import time
 import os
 import spotipy
@@ -142,17 +141,17 @@ def ranking(daily_dfs):
 
         country_daily['Artist_Genres'] = artist_genres_daily
         daily_ranking_list.append(country_daily)
-        time.sleep(30)
+        time.sleep(10)
 
     return daily_ranking_list
 
 
-def artist_genres(daily_genres):
+def artist_song_characteristics(daily_characteristics):
     # Generating list of urls to search and create lists of song information
     # This process is done for daily
     daily_genres_list = []
 
-    for country_daily in tqdm(daily_genres):
+    for country_daily in tqdm(daily_characteristics):
         daily_song_urls = list(country_daily.URL)
         daily_song_ids = []
 

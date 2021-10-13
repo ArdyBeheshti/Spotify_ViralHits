@@ -19,10 +19,10 @@ print("Daily dataframe lists created")
 daily_ranking_dfs = spotify_daily_functions.ranking(daily_dfs)
 print("Finished ranking daily Spotify songs")
 
-daily_generes_df = spotify_daily_functions.artist_genres(daily_ranking_dfs)
+daily_songs_characteristics_df = spotify_daily_functions.artist_song_characteristics(daily_ranking_dfs)
 print("Finished getting genres for each artist")
 
-daily_geocode_df = spotify_daily_functions.geocode(daily_generes_df)
+daily_geocode_df = spotify_daily_functions.geocode(daily_songs_characteristics_df)
 print("Finished geocoding")
 
 spotify_daily_functions.create_db(data_directory, daily_geocode_df)

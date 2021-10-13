@@ -19,10 +19,10 @@ print("Weekly dataframe lists created")
 weekly_ranking_dfs = spotify_weekly_functions.ranking(weekly_dfs)
 print("Finished ranking weekly Spotify songs")
 
-weekly_generes_df = spotify_weekly_functions.artist_genres(weekly_ranking_dfs)
+weekly_songs_characteristics_df = spotify_weekly_functions.artist_song_characteristics(weekly_ranking_dfs)
 print("Finished getting genres for each artist")
 
-weekly_geocode_df = spotify_weekly_functions.geocode(weekly_generes_df)
+weekly_geocode_df = spotify_weekly_functions.geocode(weekly_songs_characteristics_df)
 print("Finished geocoding")
 
 spotify_weekly_functions.create_db(path, weekly_geocode_df)
